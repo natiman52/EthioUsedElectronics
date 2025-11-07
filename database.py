@@ -13,6 +13,7 @@ DB_CONFIG = {
     "database":os.getenv("USEDELECTRONICS_DB_NAME")
 }
 
+print(DB_CONFIG)
 def get_db_connection():
     return mysql.connector.connect(**DB_CONFIG)
 
