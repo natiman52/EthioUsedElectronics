@@ -6,8 +6,10 @@ dotenv.load_dotenv()
 
 BOT_TOKEN = os.getenv('USEDELECTRONICS_BOT_TOKEN')
 
-required_channel = "@Ethiousedelectronics"
+required_channel = "@Lets_learnCoding"
+
 admin_id = 5916186791
+
 MAX_PHOTOS = 5
 
 PRIVATE_STORAGE_CHANNEL_ID =-1003254110177
