@@ -333,7 +333,7 @@ async def sell_photos(update: Update, context: ContextTypes.DEFAULT_TYPE):
     temp_file_id = update.message.photo[-1].file_id
     permanent_file_id = await store_photo_in_channel(context, temp_file_id)
     photos = data.get("photos", [])
-    photos.append(photo_id)
+    photos.append(permanent_file_id)
     data["photos"] = photos
     if len(photos) >= MAX_PHOTOS:
         await update.message.reply_text("⚠️ You've reached the maximum of 5 photos.")
