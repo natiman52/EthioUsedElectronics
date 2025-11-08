@@ -153,7 +153,7 @@ def save_item(user_id, category, answers, photos):
     """
     try:
         # Pass Python objects directly, connector handles serialization for JSON columns
-        cursor.execute(sql, (user_id, category, answers, photos))
+        cursor.execute(sql, (user_id, category, json.dumps(answers), json.dumps(photos)))
         item_id = cursor.lastrowid
         conn.commit()
         print(f"Saved item for user {user_id} with item_id={item_id}")
