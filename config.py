@@ -439,18 +439,18 @@ buy_category_questions = {
 }
 
 BUY_CATEGORY_PHOTOS = {
-    "Smartphones": "photos/smartphones.jpg",
-    "Laptops": "photos/laptops.jpg",
-    "Headset": "photos/headsets.jpg",
-    "Computer": "photos/computers.jpg",
-    "Power Bank": "photos/powerbanks.jpg",
-    "Keyboard": "photos/keyboards.jpg",
-    "Tablet": "photos/tablets.jpg",
-    "Smartwatche": "photos/smartwaches.jpg",
-    "Monitor": "photos/monitors.jpg",
-    "External Storage": "photos/external_storages.jpg",
-    "Speakers": "photos/speakers.jpg",
-    "Other": "photos/other.jpg"
+    "Smartphones": "./photos/smartphones.jpg",
+    "Laptops": "./photos/laptops.jpg",
+    "Headset": "./photos/headsets.jpg",
+    "Computer": "./photos/computers.jpg",
+    "Power Bank": "./photos/powerbanks.jpg",
+    "Keyboard": "./photos/keyboards.jpg",
+    "Tablet": "./photos/tablets.jpg",
+    "Smartwatche": "./photos/smartwaches.jpg",
+    "Monitor": "./photos/monitors.jpg",
+    "External Storage": "./photos/external_storages.jpg",
+    "Speakers": "./photos/speakers.jpg",
+    "Other": "./photos/other.jpg"
 }
 
 sell_categories = [
