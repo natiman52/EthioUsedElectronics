@@ -732,7 +732,7 @@ async def preview_buy_post(update, context):
     caption += f"Location: <b>{buyer_location}</b>\n"
     caption += "\n@ethiousedelectronics"
     await update.message.reply_text("🖼 Generating preview...", reply_markup=ReplyKeyboardRemove())
-    photo_path = BUY_CATEGORY_PHOTOS.get(category, "photos/other.jpg")
+    photo_path = BUY_CATEGORY_PHOTOS.get(category, "./photos/other.jpg")
     try:
         with open(photo_path, 'rb') as photo:
             await update.message.reply_photo(photo=photo, caption=caption, parse_mode=ParseMode.HTML)
