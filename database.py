@@ -238,9 +238,9 @@ def get_final_item(item_id):
         user_id = row['user_id']
         category = row['category']
         # Connector can return JSON columns as Python dicts/lists directly
-        answers = row['answers'] or {}
-        photos = row['photos'] or []
-        edited = row['edited_answers'] or {}
+        answers = json.loads(row['answers']) if row['answers'] else {}
+        photos = json.loads(row['photos']) if row['photos'] else []
+        edited = json.loads(row['edited_answers']) if row['edited_answers'] else {}
 
         # Ensure they are dicts if they came as None from an empty JSON column
         if not isinstance(answers, dict): answers = {}
