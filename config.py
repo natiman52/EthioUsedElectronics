@@ -145,7 +145,7 @@ SELL_DISPLAY_MAPPING = {
 }
 
 BUY_DISPLAY_MAPPING = {
-    "Smartphones": {
+    "Smartphone": {
         "Brand & Model (if specific):": "Preferred Brand & Model",
         "Storage preference:": "Storage",
         "RAM preference:": "RAM",
@@ -155,7 +155,7 @@ BUY_DISPLAY_MAPPING = {
         "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
-    "Laptops": {
+    "Laptop": {
         "Brand & Model (if specific):": "Preferred Brand & Model",
         "Processor preference:": "Processor",
         "RAM size:": "RAM",
@@ -211,7 +211,7 @@ BUY_DISPLAY_MAPPING = {
         "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
-    "Smartwatche": {
+    "Smartwatch": {
         "Brand & Model:": "Preferred Brand & Model",
         "Features needed (GPS/Cellular/Health Tracking):": "Features Needed",
         "Battery condition preference:": "Battery Condition",
@@ -239,7 +239,7 @@ BUY_DISPLAY_MAPPING = {
         "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
-    "Speakers": {
+    "Speaker": {
         "Brand & Model:": "Preferred Brand & Model",
         "Type (Bluetooth/Wired/Home Theater/Portable):": "Type",
         "Condition (New/Used/Either):": "Condition",
@@ -257,50 +257,50 @@ BUY_DISPLAY_MAPPING = {
 }
 
 category_questions = {
-    "Smartphones": [
+    "Smartphone": [
         "Brand & Model:", "Storage:", "RAM:", "Battery Condition:",
         "Condition (New/Used/Refurbished):", "Price (ETB):",
         "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
-    "Laptops": [
+    "Laptop": [
         "Brand & Model:", "Processor (Intel i5, Ryzen 7, etc.):", "RAM:",
         "Storage (SSD/HDD, size):", "Graphics (if any):", "Battery Condition:",
         "Condition (New/Used/Refurbished):", "Price (ETB):",
         "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
-    "Headsets": [
+    "Headset": [
         "Brand & Model:", "Type (Wireless/Wired/Noise Cancelling/Gaming):",
         "Condition (New/Used):", "Price (ETB):",
         "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
-    "Computers": [
+    "Computer": [
         "Brand & Model / Custom Build:", "Processor:", "RAM:", "Storage:",
         "Graphics Card (if any):", "Includes Monitor? (Yes/No):",
         "Condition (New/Used):", "Price (ETB):",
         "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
-    "Power Banks": [
+    "Power Bank": [
         "Brand & Model:", "Capacity (mAh):", "Condition (New/Used):",
         "Price (ETB):", "Other (anything you want to tell for the buyer) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
-    "Keyboards": [
+    "Keyboard": [
         "Brand & Model:", "Type (Mechanical/Wireless/Gaming):",
         "Condition (New/Used):", "Price (ETB):",
         "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
-    "Tablets": [
+    "Tablet": [
         "Brand & Model:", "Storage & RAM:", "Battery Condition:",
         "Condition (New/Used/Refurbished):", "Price (ETB):",
         "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
-    "Smartwatches": [
+    "Smartwatch": [
         "Brand & Model:", "Features (GPS, Cellular, Health Tracking):",
         "Battery Condition:", "Condition (New/Used):",
         "Price (ETB):", "Other (anything you want to tell for the buyer) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
-    "Monitors": [
+    "Monitor": [
         "Brand & Model:", "Size (inches):", "Resolution (HD/FHD/4K):",
         "Refresh Rate (Hz):", "Condition (New/Used):", "Price (ETB):",
         "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
@@ -310,12 +310,12 @@ category_questions = {
         "Condition (New/Used):", "Price (ETB):",
         "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
-    "Speakers": [
+    "Speaker": [
         "Brand & Model:", "Type (Bluetooth/Wired/Home Theater/Portable):",
         "Condition (New/Used):", "Price (ETB):",
         "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
-    "Banks": [
+    "Bank": [
         "Brand & Model:", "Capacity (mAh):", "Condition (New/Used):",
         "Price (ETB):", "Other (anything you want to tell for the buyer) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
@@ -328,7 +328,7 @@ category_questions = {
 }
 
 buy_category_questions = {
-    "Smartphones": [
+    "Smartphone": [
         "Brand & Model (if specific):",
         "Storage preference:",
         "RAM preference:",
@@ -338,7 +338,7 @@ buy_category_questions = {
         "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
-    "Laptops": [
+    "Laptop": [
         "Brand & Model (if specific):",
         "Processor preference:",
         "RAM size:",
@@ -394,7 +394,7 @@ buy_category_questions = {
         "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
-    "Smartwatche": [
+    "Smartwatch": [
         "Brand & Model:",
         "Features needed (GPS/Cellular/Health Tracking):",
         "Battery condition preference:",
@@ -422,7 +422,7 @@ buy_category_questions = {
         "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
-    "Speakers": [
+    "Speaker": [
         "Brand & Model:",
         "Type (Bluetooth/Wired/Home Theater/Portable):",
         "Condition (New/Used/Either):",
@@ -440,32 +440,32 @@ buy_category_questions = {
 }
 
 BUY_CATEGORY_PHOTOS = {
-    "Smartphones": "./photos/smartphones.jpg",
-    "Laptops": "./photos/laptops.jpg",
+    "Smartphone": "./photos/smartphones.jpg",
+    "Laptop": "./photos/laptops.jpg",
     "Headset": "./photos/headsets.jpg",
     "Computer": "./photos/computers.jpg",
     "Power Bank": "./photos/powerbanks.jpg",
     "Keyboard": "./photos/keyboards.jpg",
     "Tablet": "./photos/tablets.jpg",
-    "Smartwatche": "./photos/smartwaches.jpg",
+    "Smartwatch": "./photos/smartwaches.jpg",
     "Monitor": "./photos/monitors.jpg",
     "External Storage": "./photos/external_storages.jpg",
-    "Speakers": "./photos/speakers.jpg",
+    "Speaker": "./photos/speakers.jpg",
     "Other": "./photos/other.jpg"
 }
 
 sell_categories = [
-    ["Smartphones", "Banks", "Laptops"],
-    ["Keyboards", "Headsets", "Tablets"],
-    ["Computers", "Smartwatches", "Power Banks"],
-    ["Monitors", "External Storage", "Speakers"],
+    ["Smartphone", "Bank", "Laptop"],
+    ["Keyboard", "Headset", "Tablet"],
+    ["Computer", "Smartwatch", "Power Bank"],
+    ["Monitor", "External Storage", "Speaker"],
     ["Other", "⬅️ Back"]
 ]
 
 buy_categories = [
-    ["Smartphones", "Laptops", "Headset"],
+    ["Smartphone", "Laptop", "Headset"],
     ["Computer", "Power Bank", "Keyboard"],
-    ["Tablet", "Smartwatche", "Monitor"],
-    ["External Storage", "Speakers", "Other"],
+    ["Tablet", "Smartwatch", "Monitor"],
+    ["External Storage", "Speaker", "Other"],
     ["⬅️ Back"]
 ]
