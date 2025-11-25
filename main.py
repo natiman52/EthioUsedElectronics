@@ -4,11 +4,14 @@ from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, Cal
 import re
 from telegram.constants import ParseMode
 
+# ... your existing imports ...
+
 from config import *
-from database import init_db,fetchall_ids, get_user_info,update_user_status,save_user, update_status, get_status, save_item, get_user_full_name, update_item_field, get_user_location, get_final_item, mark_item_posted, fetch_user, get_bot_stats, set_user_status
+from database import init_db, fetchall_ids, get_user_info, update_user_status, save_user, update_status, get_status, save_item, get_user_full_name, update_item_field, get_user_location, get_final_item, mark_item_posted, fetch_user, get_bot_stats, set_user_status, get_db_connection  # ADD get_db_connection HERE
 
 user_data = {}
 pending_rejections = {}
+pending_item_rejections = {}
 
 
 # --- NEW HELPER FUNCTION TO STORE PHOTO IN PRIVATE CHANNEL ---
@@ -311,7 +314,17 @@ async def sell_details(update: Update, context: ContextTypes.DEFAULT_TYPE):
     q_index = data["q_index"]
     question_list = category_questions[category]
     answer_key = question_list[q_index]
-    data["answers"][answer_key] = update.message.text
+    
+    answer_text = update.message.text.strip()
+    
+    # Check if this is an "Other" question and user wants to skip
+    is_other_question = any(keyword in answer_key for keyword in ["Other", "other", "anything you want to tell"])
+    if is_other_question and answer_text.lower() == "skip":
+        # Skip this question - don't store the answer and move to next
+        pass
+    else:
+        data["answers"][answer_key] = answer_text
+    
     q_index += 1
     data["q_index"] = q_index
     if q_index < len(question_list):
@@ -319,7 +332,7 @@ async def sell_details(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"📝 {next_q}")
         return SELL_DETAILS
     await update.message.reply_text("📸 Now send photos of the item (you can send up to 5 photos). Send them one by one.", parse_mode="Markdown")
-    return SELL_PHOTOS
+    return SELL_PHOTOS  
 
 async def sell_photos(update: Update, context: ContextTypes.DEFAULT_TYPE):
     data = context.user_data["sell"]
@@ -375,21 +388,27 @@ async def preview_post(update: Update, context: ContextTypes.DEFAULT_TYPE):
     seller_location = get_user_location(user_id)
     brand_model = answers.get('Brand & Model:', 'N/A')
     price = answers.get('Price (ETB):', 'N/A')
+    
+    # Restructured caption format
     caption = f"<b>{brand_model} | {price} BR</b>\n\n"
     caption += f"Device Type: <b>{category}</b>\n"
+    caption += f"Brand & Model: <b>{brand_model}</b>\n"
+    
+    # Add item-specific details (excluding price, contact, and brand/model which we already added)
     display_mapping = SELL_DISPLAY_MAPPING.get(category, {})
     for question, answer in answers.items():
-        if question == 'Price (ETB):' or question == 'Contact (Phone/Telegram):':
+        if question in ['Price (ETB):', 'Contact (Phone/Telegram):', 'Brand & Model:']:
             continue
         display_name = display_mapping.get(question, question.replace(':', ''))
         caption += f"{display_name}: <b>{answer}</b>\n"
-    price_value = answers.get('Price (ETB):', 'N/A')
-    caption += f"Price: <b>{price_value} birr</b>\n"
+    
+    # Add seller information section
     caption += f"Seller Name: <b>{seller_name}</b>\n"
     caption += f"Location: <b>{seller_location}</b>\n"
     contact = answers.get('Contact (Phone/Telegram):', 'N/A')
     caption += f"Contact: <b>{contact}</b>\n"
     caption += "\n@ethiousedelectronics"
+    
     media_group = []
     for i, photo_id in enumerate(photos):
         if i == 0:
@@ -489,22 +508,31 @@ async def send_to_admin(update: Update, context: ContextTypes.DEFAULT_TYPE, data
     item_id = save_item(user_id, category, answers, photos)
     print(f"Sending item_id={item_id} to admin")
     seller_name = get_user_full_name(user_id)
+    seller_location = get_user_location(user_id)
     brand_model = answers.get('Brand & Model:', 'N/A')
     price = answers.get('Price (ETB):', 'N/A')
-    caption = f"<b>📦 New Item Submission</b>\n\n<b>{brand_model} | {price} BR</b>\n\n"
+    
+    # Restructured caption format
+    caption = f"<b>📦 New Item Submission</b>\n\n"
+    caption += f"<b>{brand_model} | {price} BR</b>\n\n"
     caption += f"Device Type: <b>{category}</b>\n"
+    caption += f"Brand & Model: <b>{brand_model}</b>\n"
+    
+    # Add item-specific details
     display_mapping = SELL_DISPLAY_MAPPING.get(category, {})
     for question, answer in answers.items():
-        if question == 'Price (ETB):' or question == 'Contact (Phone/Telegram):':
+        if question in ['Price (ETB):', 'Contact (Phone/Telegram):', 'Brand & Model:']:
             continue
         display_name = display_mapping.get(question, question.replace(':', ''))
         caption += f"{display_name}: <b>{answer}</b>\n"
-    price_value = answers.get('Price (ETB):', 'N/A')
-    caption += f"Price: <b>{price_value} birr</b>\n"
+    
+    # Add seller information section
     caption += f"Seller Name: <b>{seller_name}</b>\n"
+    caption += f"Location: <b>{seller_location}</b>\n"
     contact = answers.get('Contact (Phone/Telegram):', 'N/A')
     caption += f"Contact: <b>{contact}</b>\n"
     caption += f"\n@ethiousedelectronics"
+    
     media_group = [InputMediaPhoto(media=photos[0], caption=caption, parse_mode=ParseMode.HTML)]
     for photo_id in photos[1:]:
         media_group.append(InputMediaPhoto(media=photo_id))
@@ -519,16 +547,29 @@ async def admin_review_buttons(update: Update, context: ContextTypes.DEFAULT_TYP
     parts = query.data.split("_")
     action = parts[1]
     item_id = int(parts[2])
+    
+    # FIX: Use the admin_id from config import instead of trying to access a local variable
     if query.from_user.id != admin_id:
         await query.answer("❌ Only admin can perform this action.")
         return
+    
     item = get_final_item(item_id)
     if not item:
         await query.edit_message_text("⚠️ Could not find item data.")
         return
+    
+    if action == "cancel":
+        # FIX: Use a different variable name to avoid conflict
+        current_admin_id = query.from_user.id
+        pending_item_rejections[current_admin_id] = {"item_id": item_id}
+        await query.edit_message_text(f"📝 Please type the <b>reason for rejecting</b> item <code>{item_id}</code>.", parse_mode=ParseMode.HTML)
+        return ASK_ITEM_REJECT_REASON
+    
+    # Rest of the existing code for "post" and "edit" actions...
     category = item["category"]
     answers = item["answers"]
     photos = item["photos"]
+    
     if action == "post":
         if category.startswith("Buy Request: "):
             clean_category = category.replace("Buy Request: ", "")
@@ -549,22 +590,30 @@ async def admin_review_buttons(update: Update, context: ContextTypes.DEFAULT_TYP
                 await context.bot.send_message(chat_id=required_channel, text=caption, parse_mode=ParseMode.HTML)
         else:
             seller_name = get_user_full_name(item["user_id"])
+            seller_location = get_user_location(item["user_id"])
             brand_model = answers.get('Brand & Model:', 'N/A')
             price = answers.get('Price (ETB):', 'N/A')
+            
+            # Restructured caption format
             caption = f"<b>{brand_model} | {price} BR</b>\n\n"
             caption += f"Device Type: <b>{category}</b>\n"
+            caption += f"Brand & Model: <b>{brand_model}</b>\n"
+            
+            # Add item-specific details (excluding price, contact, and brand/model which we already added)
             display_mapping = SELL_DISPLAY_MAPPING.get(category, {})
             for question, answer in answers.items():
-                if question == 'Price (ETB):' or question == 'Contact (Phone/Telegram):':
+                if question in ['Price (ETB):', 'Contact (Phone/Telegram):', 'Brand & Model:']:
                     continue
                 display_name = display_mapping.get(question, question.replace(':', ''))
                 caption += f"{display_name}: <b>{answer}</b>\n"
-            price_value = answers.get('Price (ETB):', 'N/A')
-            caption += f"Price: <b>{price_value} birr</b>\n"
+            
+            # Add seller information section
             caption += f"Seller Name: <b>{seller_name}</b>\n"
+            caption += f"Location: <b>{seller_location}</b>\n"
             contact = answers.get('Contact (Phone/Telegram):', 'N/A')
             caption += f"Contact: <b>{contact}</b>\n"
             caption += "\n@ethiousedelectronics"
+            
             media_group = [InputMediaPhoto(media=photos[0], caption=caption, parse_mode=ParseMode.HTML)]
             for photo_id in photos[1:]:
                 media_group.append(InputMediaPhoto(media=photo_id))
@@ -579,9 +628,6 @@ async def admin_review_buttons(update: Update, context: ContextTypes.DEFAULT_TYP
         kb = ReplyKeyboardMarkup([fields[i:i + 2] for i in range(0, len(fields), 2)] + [["Cancel"]], resize_keyboard=True)
         await context.bot.send_message(chat_id=admin_id, text="✏️ Choose a field to edit:", reply_markup=kb)
         return ADMIN_EDIT_FIELD_SELECT
-    elif action == "cancel":
-        await query.edit_message_text("❌ Post cancelled by admin.")
-        return
 
 async def admin_edit_field_select(update: Update, context: ContextTypes.DEFAULT_TYPE):
     field = update.message.text
@@ -595,6 +641,57 @@ async def admin_edit_field_select(update: Update, context: ContextTypes.DEFAULT_
     context.user_data["admin_edit_field"] = field
     await update.message.reply_text(f"✍️ Send new value for *{field}*:", parse_mode="Markdown", reply_markup=ReplyKeyboardRemove())
     return ADMIN_EDIT_FIELD_VALUE
+
+async def get_item_reject_reason(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    current_admin_id = update.effective_user.id  # FIX: Use different variable name
+    reason = update.message.text.strip()
+    if not reason:
+        await update.message.reply_text("⚠️ Please write a reason for rejection.")
+        return ASK_ITEM_REJECT_REASON
+    pending_item_rejections[current_admin_id]["reason"] = reason  # FIX: Use current_admin_id
+    buttons = InlineKeyboardMarkup([[InlineKeyboardButton("✅ Send to User", callback_data="send_item_rejection"), InlineKeyboardButton("✏️ Rewrite", callback_data="rewrite_item_rejection")]])
+    preview = f"❌ <b>Item Rejection Reason Preview</b>\n\n<i>{reason}</i>\n\nDo you want to send this reason to the user or rewrite it?"
+    await update.message.reply_text(preview, parse_mode=ParseMode.HTML, reply_markup=buttons)
+    return CONFIRM_ITEM_REJECTION
+
+async def handle_item_rejection_action(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    current_admin_id = query.from_user.id
+    data = query.data
+    await query.answer()
+    if current_admin_id not in pending_item_rejections:
+        await query.edit_message_text("⚠️ No pending item rejection found.")
+        return ConversationHandler.END
+    item_id = pending_item_rejections[current_admin_id]["item_id"]
+    reason = pending_item_rejections[current_admin_id].get("reason", "")
+    
+    if data == "rewrite_item_rejection":
+        await query.edit_message_text("✏️ Please type the new rejection reason:")
+        return ASK_ITEM_REJECT_REASON
+    elif data == "send_item_rejection":
+        # Update item status to rejected in database - FIXED SQL SYNTAX FOR SQLITE
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        sql = "UPDATE items SET status='rejected' WHERE id=%s"  # CHANGED %s to ?
+        cursor.execute(sql, (item_id,))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+        await query.edit_message_text(f"✅ Rejection sent to user for item <code>{item_id}</code>.", parse_mode=ParseMode.HTML)
+        
+        # Notify the user
+        item = get_final_item(item_id)
+        if item:
+            user_id = item["user_id"]
+            try:
+                await context.bot.send_message(chat_id=user_id, text=f"❌ <b>Your item has been rejected.</b>\n\n<b>Reason:</b> {reason}\n\nPlease check the requirements and try again.", parse_mode=ParseMode.HTML)
+            except Exception as e:
+                print(f"Could not send rejection message to user {user_id}: {e}")
+        
+        del pending_item_rejections[current_admin_id]
+        return ConversationHandler.END
+
 
 async def admin_edit_field_value(update: Update, context: ContextTypes.DEFAULT_TYPE):
     new_value = update.message.text
@@ -706,7 +803,17 @@ async def buy_details(update, context):
     questions = data["buy_questions"]
     q_index = data["buy_index"]
     answer_key = questions[q_index]
-    data["buy_answers"][answer_key] = update.message.text
+    
+    answer_text = update.message.text.strip()
+    
+    # Check if this is an "Other" question and user wants to skip
+    is_other_question = any(keyword in answer_key for keyword in ["Other", "other", "anything you want to tell"])
+    if is_other_question and answer_text.lower() == "skip":
+        # Skip this question - don't store the answer and move to next
+        pass
+    else:
+        data["buy_answers"][answer_key] = answer_text
+    
     q_index += 1
     data["buy_index"] = q_index
     if q_index < len(questions):
@@ -977,6 +1084,15 @@ def main():
         },
         fallbacks=[CommandHandler("cancel", lambda u, c: ConversationHandler.END)],
     )
+    item_reject_conv = ConversationHandler(
+            entry_points=[CallbackQueryHandler(admin_review_buttons, pattern="^admin_(post|edit|cancel)_[0-9]+$")],
+            states={
+                ASK_ITEM_REJECT_REASON: [MessageHandler(filters.TEXT & ~filters.COMMAND, get_item_reject_reason)],
+                CONFIRM_ITEM_REJECTION: [CallbackQueryHandler(handle_item_rejection_action, pattern="^(send_item_rejection|rewrite_item_rejection)$")],
+            },
+            fallbacks=[],
+        )
+
 
     sell_conv = ConversationHandler(
         entry_points=[MessageHandler(filters.Regex("^Sell$"), sell_entry)],
@@ -1020,6 +1136,7 @@ def main():
     app.add_handler(sell_conv)
     app.add_handler(admin_edit_conv)
     app.add_handler(registration_conv)
+    app.add_handler(item_reject_conv)
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(check_join, pattern="check_join"))

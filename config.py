@@ -21,6 +21,7 @@ BUY_CATEGORY, BUY_DETAILS, BUY_PREVIEW, BUY_CONFIRM = range(200, 204)
 BUY_EDIT_FIELD_SELECT, BUY_EDIT_FIELD_VALUE = range(204, 206)
 ASK_REJECT_REASON, CONFIRM_REJECTION = range(100, 102)
 BROADCAST_WAITING, BROADCAST_CONFIRM = range(900, 902)
+ASK_ITEM_REJECT_REASON, CONFIRM_ITEM_REJECTION = range(110, 112)  
 
 SELL_DISPLAY_MAPPING = {
     "Smartphones": {
@@ -30,7 +31,7 @@ SELL_DISPLAY_MAPPING = {
         "Battery Condition:": "Battery Condition",
         "Condition (New/Used/Refurbished):": "Condition",
         "Price (ETB):": "Price",
-        "Other (anything you want to tell for the buyer):": "Other",
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Laptops": {
@@ -42,7 +43,7 @@ SELL_DISPLAY_MAPPING = {
         "Battery Condition:": "Battery Condition",
         "Condition (New/Used/Refurbished):": "Condition",
         "Price (ETB):": "Price",
-        "Other (anything you want to tell for the buyer):": "Other",
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Headsets": {
@@ -50,7 +51,7 @@ SELL_DISPLAY_MAPPING = {
         "Type (Wireless/Wired/Noise Cancelling/Gaming):": "Type",
         "Condition (New/Used):": "Condition",
         "Price (ETB):": "Price",
-        "Other (anything you want to tell for the buyer):": "Other",
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Computers": {
@@ -62,7 +63,7 @@ SELL_DISPLAY_MAPPING = {
         "Includes Monitor? (Yes/No):": "Includes Monitor",
         "Condition (New/Used):": "Condition",
         "Price (ETB):": "Price",
-        "Other (anything you want to tell for the buyer):": "Other",
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Power Banks": {
@@ -70,7 +71,7 @@ SELL_DISPLAY_MAPPING = {
         "Capacity (mAh):": "Capacity",
         "Condition (New/Used):": "Condition",
         "Price (ETB):": "Price",
-        "Other (anything you want to tell for the buyer):": "Other",
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Keyboards": {
@@ -78,7 +79,7 @@ SELL_DISPLAY_MAPPING = {
         "Type (Mechanical/Wireless/Gaming):": "Type",
         "Condition (New/Used):": "Condition",
         "Price (ETB):": "Price",
-        "Other (anything you want to tell for the buyer):": "Other",
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Tablets": {
@@ -87,7 +88,7 @@ SELL_DISPLAY_MAPPING = {
         "Battery Condition:": "Battery Condition",
         "Condition (New/Used/Refurbished):": "Condition",
         "Price (ETB):": "Price",
-        "Other (anything you want to tell for the buyer):": "Other",
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Smartwatches": {
@@ -96,7 +97,7 @@ SELL_DISPLAY_MAPPING = {
         "Battery Condition:": "Battery Condition",
         "Condition (New/Used):": "Condition",
         "Price (ETB):": "Price",
-        "Other (anything you want to tell for the buyer):": "Other",
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Monitors": {
@@ -106,7 +107,7 @@ SELL_DISPLAY_MAPPING = {
         "Refresh Rate (Hz):": "Refresh Rate",
         "Condition (New/Used):": "Condition",
         "Price (ETB):": "Price",
-        "Other (anything you want to tell for the buyer):": "Other",
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "External Storage": {
@@ -115,7 +116,7 @@ SELL_DISPLAY_MAPPING = {
         "Capacity:": "Capacity",
         "Condition (New/Used):": "Condition",
         "Price (ETB):": "Price",
-        "Other (anything you want to tell for the buyer):": "Other",
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Speakers": {
@@ -123,7 +124,7 @@ SELL_DISPLAY_MAPPING = {
         "Type (Bluetooth/Wired/Home Theater/Portable):": "Type",
         "Condition (New/Used):": "Condition",
         "Price (ETB):": "Price",
-        "Other (anything you want to tell for the buyer):": "Other",
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Banks": {
@@ -131,14 +132,14 @@ SELL_DISPLAY_MAPPING = {
         "Capacity (mAh):": "Capacity",
         "Condition (New/Used):": "Condition",
         "Price (ETB):": "Price",
-        "Other (anything you want to tell for the buyer):": "Other",
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Other": {
         "What kind of item you want to sell:": "Item Type",
         "Condition (New/Used):": "Condition",
         "Price (ETB):": "Price",
-        "Other (anything you want to tell for the buyer):": "Other",
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     }
 }
@@ -151,7 +152,7 @@ BUY_DISPLAY_MAPPING = {
         "Battery Condition preference (if any):": "Battery Condition",
         "Condition (New/Used/Either):": "Condition",
         "Budget (ETB):": "Max Budget",
-        "Other (anything you want to tell for the Seller):": "Other",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Laptops": {
@@ -162,7 +163,7 @@ BUY_DISPLAY_MAPPING = {
         "Graphics preference (if any):": "Graphics",
         "Condition (New/Used/Either):": "Condition",
         "Budget (ETB):": "Max Budget",
-        "Other (anything you want to tell for the Seller):": "Other",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Headset": {
@@ -170,7 +171,7 @@ BUY_DISPLAY_MAPPING = {
         "Type preference (Wireless/Wired/Noise Cancelling/Gaming):": "Type",
         "Condition (New/Used/Either):": "Condition",
         "Budget (ETB):": "Max Budget",
-        "Other (anything you want to tell for the Seller):": "Other",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Computer": {
@@ -182,7 +183,7 @@ BUY_DISPLAY_MAPPING = {
         "With Monitor? (Yes/No/Either):": "With Monitor",
         "Condition (New/Used/Either):": "Condition",
         "Budget (ETB):": "Max Budget",
-        "Other (anything you want to tell for the Seller):": "Other",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Power Bank": {
@@ -190,7 +191,7 @@ BUY_DISPLAY_MAPPING = {
         "Capacity (mAh):": "Capacity",
         "Condition (New/Used/Either):": "Condition",
         "Budget (ETB):": "Max Budget",
-        "Other (anything you want to tell for the Seller):": "Other",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Keyboard": {
@@ -198,7 +199,7 @@ BUY_DISPLAY_MAPPING = {
         "Type (Mechanical/Wireless/Gaming):": "Type",
         "Condition (New/Used/Either):": "Condition",
         "Budget (ETB):": "Max Budget",
-        "Other (anything you want to tell for the Seller):": "Other",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Tablet": {
@@ -207,7 +208,7 @@ BUY_DISPLAY_MAPPING = {
         "Battery condition preference:": "Battery Condition",
         "Condition (New/Used/Either):": "Condition",
         "Budget (ETB):": "Max Budget",
-        "Other (anything you want to tell for the Seller):": "Other",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Smartwatche": {
@@ -216,7 +217,7 @@ BUY_DISPLAY_MAPPING = {
         "Battery condition preference:": "Battery Condition",
         "Condition (New/Used/Either):": "Condition",
         "Budget (ETB):": "Max Budget",
-        "Other (anything you want to tell for the Seller):": "Other",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Monitor": {
@@ -226,7 +227,7 @@ BUY_DISPLAY_MAPPING = {
         "Refresh Rate preference:": "Refresh Rate",
         "Condition (New/Used/Either):": "Condition",
         "Budget (ETB):": "Max Budget",
-        "Other (anything you want to tell for the Seller):": "Other",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "External Storage": {
@@ -235,7 +236,7 @@ BUY_DISPLAY_MAPPING = {
         "Capacity:": "Capacity",
         "Condition (New/Used/Either):": "Condition",
         "Budget (ETB):": "Max Budget",
-        "Other (anything you want to tell for the Seller):": "Other",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Speakers": {
@@ -243,14 +244,14 @@ BUY_DISPLAY_MAPPING = {
         "Type (Bluetooth/Wired/Home Theater/Portable):": "Type",
         "Condition (New/Used/Either):": "Condition",
         "Budget (ETB):": "Max Budget",
-        "Other (anything you want to tell for the Seller):": "Other",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     },
     "Other": {
         "What kind of item you want to buy:": "Item Type",
         "Condition (New/Used/Either):": "Condition",
         "Budget (ETB):": "Max Budget",
-        "Other (anything you want to tell for the Seller):": "Other",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:": "Other",
         "Contact (Phone/Telegram):": "Contact"
     }
 }
@@ -259,69 +260,69 @@ category_questions = {
     "Smartphones": [
         "Brand & Model:", "Storage:", "RAM:", "Battery Condition:",
         "Condition (New/Used/Refurbished):", "Price (ETB):",
-        "Other (anything you want to tell for the buyer):", "Contact (Phone/Telegram):"
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
     "Laptops": [
         "Brand & Model:", "Processor (Intel i5, Ryzen 7, etc.):", "RAM:",
         "Storage (SSD/HDD, size):", "Graphics (if any):", "Battery Condition:",
         "Condition (New/Used/Refurbished):", "Price (ETB):",
-        "Other (anything you want to tell for the buyer):", "Contact (Phone/Telegram):"
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
     "Headsets": [
         "Brand & Model:", "Type (Wireless/Wired/Noise Cancelling/Gaming):",
         "Condition (New/Used):", "Price (ETB):",
-        "Other (anything you want to tell for the buyer):", "Contact (Phone/Telegram):"
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
     "Computers": [
         "Brand & Model / Custom Build:", "Processor:", "RAM:", "Storage:",
         "Graphics Card (if any):", "Includes Monitor? (Yes/No):",
         "Condition (New/Used):", "Price (ETB):",
-        "Other (anything you want to tell for the buyer):", "Contact (Phone/Telegram):"
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
     "Power Banks": [
         "Brand & Model:", "Capacity (mAh):", "Condition (New/Used):",
-        "Price (ETB):", "Other (anything you want to tell for the buyer):",
+        "Price (ETB):", "Other (anything you want to tell for the buyer) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "Keyboards": [
         "Brand & Model:", "Type (Mechanical/Wireless/Gaming):",
         "Condition (New/Used):", "Price (ETB):",
-        "Other (anything you want to tell for the buyer):", "Contact (Phone/Telegram):"
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
     "Tablets": [
         "Brand & Model:", "Storage & RAM:", "Battery Condition:",
         "Condition (New/Used/Refurbished):", "Price (ETB):",
-        "Other (anything you want to tell for the buyer):", "Contact (Phone/Telegram):"
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
     "Smartwatches": [
         "Brand & Model:", "Features (GPS, Cellular, Health Tracking):",
         "Battery Condition:", "Condition (New/Used):",
-        "Price (ETB):", "Other (anything you want to tell for the buyer):",
+        "Price (ETB):", "Other (anything you want to tell for the buyer) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "Monitors": [
         "Brand & Model:", "Size (inches):", "Resolution (HD/FHD/4K):",
         "Refresh Rate (Hz):", "Condition (New/Used):", "Price (ETB):",
-        "Other (anything you want to tell for the buyer):", "Contact (Phone/Telegram):"
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
     "External Storage": [
         "Brand & Model:", "Type (HDD/SSD/Flash):", "Capacity:",
         "Condition (New/Used):", "Price (ETB):",
-        "Other (anything you want to tell for the buyer):", "Contact (Phone/Telegram):"
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
     "Speakers": [
         "Brand & Model:", "Type (Bluetooth/Wired/Home Theater/Portable):",
         "Condition (New/Used):", "Price (ETB):",
-        "Other (anything you want to tell for the buyer):", "Contact (Phone/Telegram):"
+        "Other (anything you want to tell for the buyer) - type 'skip' to omit:", "Contact (Phone/Telegram):"
     ],
     "Banks": [
         "Brand & Model:", "Capacity (mAh):", "Condition (New/Used):",
-        "Price (ETB):", "Other (anything you want to tell for the buyer):",
+        "Price (ETB):", "Other (anything you want to tell for the buyer) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "Other": [
         "What kind of item you want to sell:", "Condition (New/Used):",
-        "Price (ETB):", "Other (anything you want to tell for the buyer):",
+        "Price (ETB):", "Other (anything you want to tell for the buyer) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ]
 }
@@ -334,7 +335,7 @@ buy_category_questions = {
         "Battery Condition preference (if any):",
         "Condition (New/Used/Either):",
         "Budget (ETB):",
-        "Other (anything you want to tell for the Seller):",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "Laptops": [
@@ -345,7 +346,7 @@ buy_category_questions = {
         "Graphics preference (if any):",
         "Condition (New/Used/Either):",
         "Budget (ETB):",
-        "Other (anything you want to tell for the Seller):",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "Headset": [
@@ -353,7 +354,7 @@ buy_category_questions = {
         "Type preference (Wireless/Wired/Noise Cancelling/Gaming):",
         "Condition (New/Used/Either):",
         "Budget (ETB):",
-        "Other (anything you want to tell for the Seller):",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "Computer": [
@@ -365,7 +366,7 @@ buy_category_questions = {
         "With Monitor? (Yes/No/Either):",
         "Condition (New/Used/Either):",
         "Budget (ETB):",
-        "Other (anything you want to tell for the Seller):",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "Power Bank": [
@@ -373,7 +374,7 @@ buy_category_questions = {
         "Capacity (mAh):",
         "Condition (New/Used/Either):",
         "Budget (ETB):",
-        "Other (anything you want to tell for the Seller):",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "Keyboard": [
@@ -381,7 +382,7 @@ buy_category_questions = {
         "Type (Mechanical/Wireless/Gaming):",
         "Condition (New/Used/Either):",
         "Budget (ETB):",
-        "Other (anything you want to tell for the Seller):",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "Tablet": [
@@ -390,7 +391,7 @@ buy_category_questions = {
         "Battery condition preference:",
         "Condition (New/Used/Either):",
         "Budget (ETB):",
-        "Other (anything you want to tell for the Seller):",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "Smartwatche": [
@@ -399,7 +400,7 @@ buy_category_questions = {
         "Battery condition preference:",
         "Condition (New/Used/Either):",
         "Budget (ETB):",
-        "Other (anything you want to tell for the Seller):",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "Monitor": [
@@ -409,7 +410,7 @@ buy_category_questions = {
         "Refresh Rate preference:",
         "Condition (New/Used/Either):",
         "Budget (ETB):",
-        "Other (anything you want to tell for the Seller):",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "External Storage": [
@@ -418,7 +419,7 @@ buy_category_questions = {
         "Capacity:",
         "Condition (New/Used/Either):",
         "Budget (ETB):",
-        "Other (anything you want to tell for the Seller):",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "Speakers": [
@@ -426,14 +427,14 @@ buy_category_questions = {
         "Type (Bluetooth/Wired/Home Theater/Portable):",
         "Condition (New/Used/Either):",
         "Budget (ETB):",
-        "Other (anything you want to tell for the Seller):",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ],
     "Other": [
         "What kind of item you want to buy:",
         "Condition (New/Used/Either):",
         "Budget (ETB):",
-        "Other (anything you want to tell for the Seller):",
+        "Other (anything you want to tell for the Seller) - type 'skip' to omit:",
         "Contact (Phone/Telegram):"
     ]
 }
